@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/to-dos",
+      "handler": "to-do.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/to-dos/count",
+      "handler": "to-do.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/to-dos/:id",
+      "handler": "to-do.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/to-dos",
+      "handler": "to-do.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/to-dos/:id",
+      "handler": "to-do.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/to-dos/:id",
+      "handler": "to-do.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

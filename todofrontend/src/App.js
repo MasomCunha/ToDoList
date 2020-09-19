@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import List from './components/List.jsx'
+import ListToDos from './components/List.jsx'
 import Input from './components/Input.jsx'
 import './App.css';
 
@@ -14,8 +14,9 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Bem vindo userName!</h1>
       <Input changeUpdate={changeUpdate}/>
-      <List update={update}/>
+      <ListToDos update={update}/>
     </div>
   );
 }

@@ -1,39 +1,29 @@
-import React, { useState } from 'react'
+import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux';
 
-const ToDo = (props) => {
+class ToDo extends Component {
 
-    const [Title, setTitle] = useState("")
-    const [Description, setDescription] = useState("")
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        const data = {
-          Title: Title,
-          Description: Description,
-          Completed:false
-        };
-        axios
-          .post("http://localhost:1337/to-dos", data)
-          .then(res => {console.log(res)
-            setTitle("");
-            setDescription("");
-            props.changeUpdate()
-        })
-          .catch(err => console.log(err));
-    
-         
-      };
-    
+  render() {
     return (
-       <form className="post" onSubmit={handleSubmit}>
-           <input type="text" placeholder="Title" value={Title}
-            onChange={(e) => {setTitle(e.target.value)}}></input>
-           <input type="text" placeholder="Description" value={Description}
-            onChange={(e) => {setDescription(e.target.value)}}></input>
-           <button type="submit">Add ToDo</button>
-       </form>
+      <form className="post" onSubmit={this.handleSubmit}>
+        <input type="text" placeholder="Title" value={this.props.Title}
+          onChange={(e) => {  }}></input>
+        <input type="text" placeholder="Description" value={this.props.Description}
+          onChange={(e) => {  }}></input>
+        <button type="submit">Add ToDo</button>
+      </form>
     )
+  }
+
 }
 
-export default ToDo
+function mapStateToProps(state) {
+  return {
+    Title: state.Title,
+    Description: state.Description
+    };
+}
+
+export default connect(mapStateToProps)(ToDo)

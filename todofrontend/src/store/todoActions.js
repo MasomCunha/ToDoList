@@ -33,16 +33,16 @@ export const add = (Title, Description) => {
 }
 
 export const markAsDone = (todo) => {
-    console.log(todo)
     return dispatch => {
-        axios.put(URL + `​/to-dos​/${todo.id}`, {...todo, Completed: true})
+        axios.put(URL + `/${todo.id}`, {...todo, Completed: true})
         .then(resp => dispatch(search()))
     }
 }
 
 export const remove = (todo) => {
+    
     return dispatch => {
-        axios.delete(URL + `​/to-dos​/${todo.id}`)
+        axios.delete(URL + `/${todo.id}`)
         .then(resp => dispatch(search()))
     }
 }

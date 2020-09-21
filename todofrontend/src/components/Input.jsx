@@ -1,29 +1,32 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
+import { changeTitle, changeDescription, add } from '../store/todoActions.js'
 
-class ToDo extends Component {
 
+const ToDo = ({ Title, Description, changeDescription, changeTitle, add }) => {
 
-  render() {
+  
     return (
-      <form className="post" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Title" value={this.props.Title}
-          onChange={(e) => {  }}></input>
-        <input type="text" placeholder="Description" value={this.props.Description}
-          onChange={(e) => {  }}></input>
-        <button type="submit">Add ToDo</button>
+      <form className="post">
+        <input type="text" placeholder="Title" value={Title}
+          onChange={ changeTitle }></input>
+        <input type="text" placeholder="Description" value={Description}
+          onChange={ changeDescription }></input>
+        <button type="submit" onClick={() => add(Title, Description)} >Add ToDo</button>
       </form>
     )
   }
 
-}
-
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
-    Title: state.Title,
-    Description: state.Description
+    Title: state.todo.Title,
+    Description: state.todo.Description
     };
 }
 
-export default connect(mapStateToProps)(ToDo)
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {changeDescription, changeTitle, add},
+   dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo)

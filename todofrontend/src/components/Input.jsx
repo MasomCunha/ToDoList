@@ -8,12 +8,17 @@ const ToDo = ({ Title, Description, changeDescription, changeTitle, add }) => {
 
   
     return (
-      <form className="post">
-        <input type="text" placeholder="Title" value={Title}
+      <form className="post" style={{marginLeft: "15%", marginRight: "15%", marginBottom: "2%"}}>
+        <div className="form-group">
+        <input className="form-control" type="text" placeholder="Title" value={Title}
           onChange={ changeTitle }></input>
-        <input type="text" placeholder="Description" value={Description}
-          onChange={ changeDescription }></input>
-        <button type="submit" onClick={() => add(Title, Description)} >Add ToDo</button>
+        </div>
+        <div className="form-group">
+        <textarea className="form-control" rows="3" placeholder="Description" value={Description}
+          onChange={ changeDescription }></textarea>
+        </div>
+        <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false"
+                onClick={() => add(Title, Description)} >Add ToDo</button>
       </form>
     )
   }

@@ -9,7 +9,7 @@ const List = ({ list, search, markAsDone, remove }) => {
     
     useEffect(() => {
       search();
-   }, [])
+   }, [list, search])
 
     return (
 

@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
     Title: "",
     Description: "",
-    list: [""],
+    list: [],
     listType: "all"
 }
 

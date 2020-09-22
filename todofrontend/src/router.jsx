@@ -1,6 +1,7 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import Login from './Login'
+import { BrowserRouter, Switch } from "react-router-dom";
+import AuthRoute from './AuthRoute.jsx'
+import Login from './Login.jsx'
 import ToDoHome from './ToDoHome.jsx'
 
 
@@ -10,12 +11,12 @@ function Router() {
         <div>
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/">
+                    <AuthRoute exact path="/" type="guest">
                         <Login />
-                    </Route>
-                    <Route path="/home">
+                    </AuthRoute>
+                    <AuthRoute path="/home" type="private">
                         <ToDoHome />
-                    </Route>
+                    </AuthRoute>
                 </Switch>
             </BrowserRouter>
         </div>

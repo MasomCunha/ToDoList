@@ -14,11 +14,11 @@ function ToDoHome({ list }) {
         <Welcome />
         <NavBar />
         <Input />
-        { list.length > 0 ?
+       { list.length > 0 ?
           <List />
           :
           <WithoutList />
-        }
+        } 
       </div>
     );
   }

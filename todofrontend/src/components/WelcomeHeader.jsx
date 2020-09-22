@@ -26,7 +26,7 @@ const WelcomeHeader = ( props ) => {
 function mapStateToProps(state) {
     console.log(state)
     return {
-        UserName: state.loggin.UserName,
+        UserName: state.auth.UserName,
         };
 } 
 

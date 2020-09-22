@@ -1,31 +1,29 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { search, markAsDone, remove } from '../store/todoActions.js'
+import { fetchTodos, markAsDone, remove } from '../store/todoActions.js'
 
 
 
-const List = ({ list, search, markAsDone, remove, listType }) => {
+const List = (props) => {
 
-  console.log(listType)
+  const userKey = props.userkey
 
   useEffect(() => {
     const loadFetch = async () => {
-
-      await search();
-
+      await fetchTodos(props.userkey);
     };
-    loadFetch();
-  }, [search]);
+    loadFetch(props.userkey);
+  }, [fetchTodos]);
 
   return (
 
     <div className="card" style={{ width: "50%", marginLeft: "25%" }}>
       <ul className="list-group list-group-flush" >
 
-        {list.map((e) => {
+        {props.list.map((e) => {
 
-          if(listType === "Complete" && e.Completed) {
+          if(props.listType === "Complete" && e.Completed) {
             return (
               <li key={e.id} className="list-group-item" style={e.Completed ? { backgroundColor: "#5cb85c" } : { backgroundColor: "#f0ad4e" }}>
                 <div style={{ display: "inline-block", float: "left", marginLeft:"10%" }}>
@@ -34,17 +32,17 @@ const List = ({ list, search, markAsDone, remove, listType }) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
                   {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e)}>Incomplete</button> :
+                    onClick={() => markAsDone(e, userKey)}>Incomplete</button> :
                     <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e)}>Complete</button>}
+                      onClick={() => markAsDone(e, userKey)}>Complete</button>}
                   <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e)}>Delete</button>
+                    onClick={() => remove(e, userKey)}>Delete</button>
                 </div>
               </li>
             ) 
           }
           
-          if(listType === "Incomplete" && !e.Completed) {
+          if(props.listType === "Incomplete" && !e.Completed) {
             return (
               <li key={e.id} className="list-group-item" style={e.Completed ? { backgroundColor: "#5cb85c" } : { backgroundColor: "#f0ad4e" }}>
                 <div style={{ display: "inline-block", float: "left", marginLeft:"10%" }}>
@@ -53,17 +51,17 @@ const List = ({ list, search, markAsDone, remove, listType }) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
                   {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e)}>Incomplete</button> :
+                    onClick={() => markAsDone(e, userKey)}>Incomplete</button> :
                     <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e)}>Complete</button>}
+                      onClick={() => markAsDone(e, userKey)}>Complete</button>}
                   <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e)}>Delete</button>
+                    onClick={() => remove(e, userKey)}>Delete</button>
                 </div>
               </li>
             ) 
           }
 
-          if(listType === "all") {
+          if(props.listType === "all") {
             return (
               <li key={e.id} className="list-group-item" style={e.Completed ? { backgroundColor: "#5cb85c" } : { backgroundColor: "#f0ad4e" }}>
                 <div style={{ display: "inline-block", float: "left", marginLeft:"10%" }}>
@@ -72,11 +70,11 @@ const List = ({ list, search, markAsDone, remove, listType }) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
                   {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e)}>Incomplete</button> :
+                    onClick={() => markAsDone(e, userKey)}>Incomplete</button> :
                     <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e)}>Complete</button>}
+                      onClick={() => markAsDone(e, userKey)}>Complete</button>}
                   <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e)}>Delete</button>
+                    onClick={() => remove(e, userKey)}>Delete</button>
                 </div>
               </li>
             ) 
@@ -84,8 +82,9 @@ const List = ({ list, search, markAsDone, remove, listType }) => {
         })
         }
       </ul>
-    </div>
 
+    </div>
+ 
   )
 
 }
@@ -94,12 +93,12 @@ const mapStateToProps = state => (
   {
     list: state.todo.list,
     listType: state.todo.listType,
-    updade: state.update
+    userkey: state.auth.userKey
   }
 )
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { search, markAsDone, remove },
+  { fetchTodos, markAsDone, remove },
   dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(List)

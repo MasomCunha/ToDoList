@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { login } from '../store/logginActions.js'
+import { login } from '../store/authActions.js'
 import { bindActionCreators } from 'redux'
 
 const LogginModal = ( { login } ) => {
@@ -18,16 +18,16 @@ const LogginModal = ( { login } ) => {
 
     return (
 
-        <div class="modal fade" id="login" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Loggin</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal fade" id="login" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="staticBackdropLabel">Login</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div className="modal-body">
                         <form className="post" style={{ marginLeft: "15%", marginRight: "15%", marginBottom: "2%" }}>
                             <div className="form-group">
                                 <input className="form-control" type="text" placeholder="UserName" value={user} onChange={handleChangeUser}
@@ -38,7 +38,7 @@ const LogginModal = ( { login } ) => {
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
+                    <div className="modal-footer">
                         <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" style={{ marginRight: "45%" }}
                         onClick={() => login(user, password)}>Loggin</button>
                     </div>

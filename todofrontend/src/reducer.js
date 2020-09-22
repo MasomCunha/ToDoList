@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import todoReducer from './store/todoReducer.js'
-import logginReducer from './store/logginReducer.js'
+import authReducer from './store/authReducer.js'
 
 const rootReducer = combineReducers({
     todo: todoReducer,
-    loggin: logginReducer
+    auth: authReducer
 })
 
 export default rootReducer

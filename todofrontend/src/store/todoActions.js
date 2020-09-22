@@ -12,51 +12,79 @@ export const changeDescription = (event) => ({
     payload: event.target.value
 })
 
-export const search = () => {
-    const request = axios.get(URL)
+export const fetchTodos = (userKey) => {
+    console.log(userKey)
+    const request = axios.get(URL, {
+        headers: {
+          Authorization:
+            'Bearer ' + userKey
+        },
+      });
     return {
         type: 'TODO_LIST',
         payload: request
     }
 }
 
-export const add = (Title, Description) => {
+export const add = (Title, Description, userKey) => {
     return dispatch => {
         axios.post(URL, {
             Title: Title,
             Description: Description,
             Completed: false
-        })
+          }, {
+            headers: {
+                Authorization:'Bearer ' + userKey
+            }
+          })
             .then(resp => dispatch({
                 type: 'TODO_ADDED',
                 payload: resp.data
             }))
-            .then(resp => dispatch(search()))
+            .then(resp => dispatch(fetchTodos(userKey)))
     }
 }
 
-export const markAsDone = (todo) => {
+export const markAsDone = (todo, userKey) => {
+
+    console.log("here")
+    console.log(userKey)
 
     if (todo.Completed === true) {
         return dispatch => {
-            axios.put(URL + `/${todo.id}`, { ...todo, Completed: false })
-                .then(resp => dispatch(search()))
+            axios.put(URL + `/${todo.id}`, {
+                ...todo, Completed: false
+              }, {
+                headers: {
+                    Authorization:'Bearer ' + userKey
+                }
+              }            
+            )
+                .then(resp => dispatch(fetchTodos(userKey)))
         }
     }
 
     if (todo.Completed === false) {
         return dispatch => {
-            axios.put(URL + `/${todo.id}`, { ...todo, Completed: true })
-                .then(resp => dispatch(search()))
+            axios.put(URL + `/${todo.id}`, {
+                ...todo, Completed: false
+              }, {
+                headers: {
+                    Authorization:'Bearer ' + userKey
+                }
+              }            )
+                .then(resp => dispatch(fetchTodos(userKey)))
         }
     }
 }
 
-export const remove = (todo) => {
+export const remove = (todo, userKey) => {
 
     return dispatch => {
-        axios.delete(URL + `/${todo.id}`)
-            .then(resp => dispatch(search()))
+        axios.delete(URL + `/${todo.id}`, {
+            Authorization:'Bearer ' + userKey
+        })
+            .then(resp => dispatch(fetchTodos(userKey)))
     }
 }
 

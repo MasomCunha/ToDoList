@@ -1,34 +1,15 @@
 import React from 'react';
-import List from './components/List.jsx'
-import Input from './components/Input.jsx'
-import NavBar from './components/NavBar.jsx'
-import Welcome from './components/WelcomeHeader.jsx'
-import WithoutList from './components/WithoutList.jsx'
+import Router from './router'
 import './App.css';
 
-import { connect } from 'react-redux'
 
-
-function App({ list }) {
-
+function App() {
 
   return (
     <div className="App">
-      <Welcome />
-      <NavBar />
-      <Input />
-      { list.length > 0 ?
-        <List />
-        :
-        <WithoutList />
-      }
-
+      <Router />
     </div>
   );
 }
 
-const mapStateToProps = state => ({
-  list: state.todo.list
-})
-
-export default connect(mapStateToProps)(App);
+export default App

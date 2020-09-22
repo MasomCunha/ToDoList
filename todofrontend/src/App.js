@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import List from './components/List.jsx'
 import Input from './components/Input.jsx'
 import NavBar from './components/NavBar.jsx'
@@ -15,15 +15,14 @@ function App({ list }) {
   return (
     <div className="App">
       <Welcome />
+      <NavBar />
       <Input />
       { list.length > 0 ?
-        <Fragment>
-          <NavBar />
-          <List />
-        </Fragment>
+        <List />
         :
         <WithoutList />
       }
+
     </div>
   );
 }

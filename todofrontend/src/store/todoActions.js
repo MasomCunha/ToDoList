@@ -28,7 +28,7 @@ export const add = (Title, Description) => {
             Completed: false
         })
             .then(resp => dispatch({
-                type: 'TODO_ADD',
+                type: 'TODO_ADDED',
                 payload: resp.data
             }))
             .then(resp => dispatch(search()))
@@ -57,5 +57,29 @@ export const remove = (todo) => {
     return dispatch => {
         axios.delete(URL + `/${todo.id}`)
             .then(resp => dispatch(search()))
+    }
+}
+
+export const changeList = (buttonName) => {
+
+    if(buttonName === "all") {
+        return {
+            type: 'CHANGE_TO_ALL',
+            payload: "all"
+        }
+    }
+
+    if(buttonName === "Complete") {
+        return {
+            type: 'CHANGE_TO_COMPLETE',
+            payload: "Complete"
+        }
+    }
+   
+    if(buttonName === "Incomplete") {
+        return {
+            type: 'CHANGE_TO_INCOMPLETE',
+            payload: "Incomplete"
+        }
     }
 }

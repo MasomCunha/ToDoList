@@ -4,21 +4,21 @@ import { bindActionCreators } from 'redux'
 import { changeTitle, changeDescription, add } from '../store/todoActions.js'
 
 
-const ToDo = ({ Title, Description, changeDescription, changeTitle, add }) => {
+const ToDo = ({ Title, Description, userKey, changeDescription, changeTitle, add, user, email, userID }) => {
 
 
   return (
 
-    <div class="modal fade" id="inputToDo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Add ToDo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div className="modal fade" id="inputToDo" data-backdrop="static" data-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="staticBackdropLabel">Add ToDo</h5>
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div className="modal-body">
             <form className="post" style={{ marginLeft: "15%", marginRight: "15%", marginBottom: "2%" }}>
               <div className="form-group">
                 <input className="form-control" type="text" placeholder="Title" value={Title}
@@ -30,9 +30,9 @@ const ToDo = ({ Title, Description, changeDescription, changeTitle, add }) => {
               </div>
             </form>
           </div>
-          <div class="modal-footer">
+          <div className="modal-footer">
             <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal"
-              onClick={() => add(Title, Description)} >Add ToDo</button>
+              onClick={() => add(Title, Description, userKey, user, email, userID)} >Add ToDo</button>
           </div>
         </div>
       </div>
@@ -43,7 +43,11 @@ const ToDo = ({ Title, Description, changeDescription, changeTitle, add }) => {
 const mapStateToProps = state => {
   return {
     Title: state.todo.Title,
-    Description: state.todo.Description
+    Description: state.todo.Description,
+    userKey: state.auth.userKey,
+    user: state.auth.UserName,
+    email: state.auth.email,
+    userID: state.auth.userID
   };
 }
 

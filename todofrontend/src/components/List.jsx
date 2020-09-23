@@ -1,92 +1,92 @@
 import React, { useEffect } from 'react'
+import WithoutList from './WithoutList.jsx'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { search, markAsDone, remove } from '../store/todoActions.js'
+import { fetchTodos, markAsDone, remove } from '../store/todoActions.js'
 
 
 
-const List = ({ list, search, markAsDone, remove, listType }) => {
-
-  console.log(listType)
-
+const List = (props) => {
+  
+  const userKey = props.userkey;
+  
   useEffect(() => {
     const loadFetch = async () => {
-
-      await search();
-
+      await props.fetchTodos(props.userkey, props.userID);
     };
-    loadFetch();
-  }, [search]);
+    loadFetch(props.userkey, props.userID);
+  }, [props.fetchTodos]);
 
-  return (
 
-    <div className="card" style={{ width: "50%", marginLeft: "25%" }}>
+  const card = (props) => {
+    return(
+      <div className="card" style={{ width: "50%", marginLeft: "25%" }}>
       <ul className="list-group list-group-flush" >
+        
+        {
+        props.list.map((e) => {
 
-        {list.map((e) => {
-
-          if(listType === "Complete" && e.Completed) {
+          if (props.listType === "Complete" && e.Completed) {
             return (
-              <li key={e.id} className="list-group-item" style={e.Completed ? { backgroundColor: "#5cb85c" } : { backgroundColor: "#f0ad4e" }}>
-                <div style={{ display: "inline-block", float: "left", marginLeft:"10%" }}>
-                  <h3> {e.Title} </h3>
-                  <p> {e.Description} </p>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
-                  {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e)}>Incomplete</button> :
-                    <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e)}>Complete</button>}
-                  <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e)}>Delete</button>
-                </div>
-              </li>
-            ) 
+              createList(e, props, userKey)
+            )
+          }
+
+          if (props.listType === "Incomplete" && !e.Completed) {
+            return (
+              createList(e, props, userKey)
+            )
+          }
+
+          if (props.listType === "all") {
+            return (
+              createList(e, props, userKey)
+            )
           }
           
-          if(listType === "Incomplete" && !e.Completed) {
-            return (
-              <li key={e.id} className="list-group-item" style={e.Completed ? { backgroundColor: "#5cb85c" } : { backgroundColor: "#f0ad4e" }}>
-                <div style={{ display: "inline-block", float: "left", marginLeft:"10%" }}>
-                  <h3> {e.Title} </h3>
-                  <p> {e.Description} </p>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
-                  {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e)}>Incomplete</button> :
-                    <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e)}>Complete</button>}
-                  <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e)}>Delete</button>
-                </div>
-              </li>
-            ) 
-          }
+          return null
 
-          if(listType === "all") {
-            return (
-              <li key={e.id} className="list-group-item" style={e.Completed ? { backgroundColor: "#5cb85c" } : { backgroundColor: "#f0ad4e" }}>
-                <div style={{ display: "inline-block", float: "left", marginLeft:"10%" }}>
-                  <h3> {e.Title} </h3>
-                  <p> {e.Description} </p>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
-                  {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e)}>Incomplete</button> :
-                    <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e)}>Complete</button>}
-                  <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e)}>Delete</button>
-                </div>
-              </li>
-            ) 
-          }
         })
         }
       </ul>
-    </div>
 
+    </div>
+    )
+  }
+
+  const createList = (e, props, userKey) => {
+    return (
+      <li key={e.id} className="list-group-item" style={e.Completed ? { backgroundColor: "#5cb85c" } : { backgroundColor: "#f0ad4e" }}>
+        <div style={{ display: "inline-block", float: "left", marginLeft: "10%" }}>
+          <h3> {e.Title} </h3>
+          <p> {e.Description} </p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "5%" }}>
+          {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
+            onClick={() => props.markAsDone(e, userKey, props.userID)}>Incomplete</button> :
+            <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
+              onClick={() => props.markAsDone(e, userKey, props.userID)}>Complete</button>}
+          <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
+            onClick={() => props.remove(e, userKey, props.userID)}>Delete</button>
+        </div>
+      </li>
+    )
+  }
+
+  return (
+    <div>
+      
+      {
+      props.list.length > 0  ? 
+        card(props) 
+        : 
+        <WithoutList/>
+       } 
+
+    </div>
   )
+
+    
 
 }
 
@@ -94,12 +94,13 @@ const mapStateToProps = state => (
   {
     list: state.todo.list,
     listType: state.todo.listType,
-    updade: state.update
+    userkey: state.auth.userKey,
+    userID: state.auth.userID
   }
 )
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { search, markAsDone, remove },
+  { fetchTodos, markAsDone, remove },
   dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(List)

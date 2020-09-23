@@ -32,3 +32,11 @@ function submit(values, url) {
     }
 }
 
+
+export const logout = () => {
+    return {
+        type: 'USER_LOGOUT',
+        payload: null
+    }
+}
+

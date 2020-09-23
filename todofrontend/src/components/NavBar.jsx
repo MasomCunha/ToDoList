@@ -7,7 +7,7 @@ const NavBar = ({ changeList }) => {
 
     return (
         
-        <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ marginLeft: "15%", marginRight: "15%", marginBottom:"1%"}}>
+        <nav className="navbar navbar-expand-lg" style={{ backgroundColor:"#D3D3D3", marginLeft: "15%", marginRight: "15%", marginBottom:"1%"}}>
             <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#inputToDo">Add ToDo</button>
             <button type="button" className="btn btn-outline-secondary" onClick = {() => changeList("all")}>All</button>
             <button type="button" className="btn btn-outline-success" onClick = {() => changeList("Complete")}>Complete</button>

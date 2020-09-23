@@ -40,7 +40,7 @@ const LogginModal = ( { login } ) => {
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" style={{ marginRight: "45%" }}
-                        onClick={() => login(user, password)}>Loggin</button>
+                        onClick={() => login(user, password)}>Login</button>
                     </div>
                 </div>
             </div>

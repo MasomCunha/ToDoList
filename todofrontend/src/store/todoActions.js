@@ -47,8 +47,7 @@ export const add = (Title, Description, userKey) => {
 
 export const markAsDone = (todo, userKey) => {
 
-    console.log("here")
-    console.log(userKey)
+    console.log(todo)
 
     if (todo.Completed === true) {
         return dispatch => {
@@ -60,7 +59,7 @@ export const markAsDone = (todo, userKey) => {
                 }
               }            
             )
-                .then(resp => dispatch(fetchTodos(userKey)))
+            .then(resp => dispatch(fetchTodos(userKey)))
         }
     }
 
@@ -73,7 +72,7 @@ export const markAsDone = (todo, userKey) => {
                     Authorization:'Bearer ' + userKey
                 }
               }            )
-                .then(resp => dispatch(fetchTodos(userKey)))
+            .then(resp => dispatch(fetchTodos(userKey)))
         }
     }
 }

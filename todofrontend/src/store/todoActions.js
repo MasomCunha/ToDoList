@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const URL = 'http://localhost:1337/to-dos'
+const GETURL = 'http://localhost:1337/users'
 
 export const changeTitle = (event) => ({
     type: 'CHANGE_TITLE',
@@ -12,8 +13,8 @@ export const changeDescription = (event) => ({
     payload: event.target.value
 })
 
-export const fetchTodos = (userKey) => {
-    const request = axios.get(URL, {
+export const fetchTodos = (userKey, userID) => {
+    const request = axios.get(GETURL + `/${userID}`, {
         headers: {
           Authorization:
             'Bearer ' + userKey
@@ -25,12 +26,17 @@ export const fetchTodos = (userKey) => {
     }
 }
 
-export const add = (Title, Description, userKey) => {
+export const add = (Title, Description, userKey, user, email, userID) => {
     return dispatch => {
         axios.post(URL, {
             Title: Title,
             Description: Description,
-            Completed: false
+            Completed: false,
+            user: {
+                id: userID,
+                username: user,
+                email: email
+            }
           }, {
             headers: {
                 Authorization:'Bearer ' + userKey
@@ -40,11 +46,11 @@ export const add = (Title, Description, userKey) => {
                 type: 'TODO_ADDED',
                 payload: resp.data
             }))
-            .then(resp => dispatch(fetchTodos(userKey)))
+            .then(resp => dispatch(fetchTodos(userKey, userID)))
     }
 }
 
-export const markAsDone = (todo, userKey) => {
+export const markAsDone = (todo, userKey, userID) => {
 
     if (todo.Completed === true) {
         return dispatch => {
@@ -55,8 +61,7 @@ export const markAsDone = (todo, userKey) => {
                 headers: {
                     Authorization:'Bearer ' + userKey
                 }
-              }).then(console.log("here"))
-                .then(resp => dispatch(fetchTodos(userKey)))
+              }).then(resp => dispatch(fetchTodos(userKey, userID)))
         }
     }
 
@@ -69,15 +74,14 @@ export const markAsDone = (todo, userKey) => {
                 headers: {
                     Authorization:'Bearer ' + userKey
                 }
-              }).then(console.log("here"))
-                .then(resp => dispatch(fetchTodos(userKey)))
+              }).then(resp => dispatch(fetchTodos(userKey, userID)))
         }
     }
 
     
 }
 
-export const remove = (todo, userKey) => {
+export const remove = (todo, userKey, userID) => {
 
     return dispatch => {
         axios.delete(URL + `/${todo.id}`, {
@@ -85,7 +89,7 @@ export const remove = (todo, userKey) => {
                 Authorization:'Bearer ' + userKey
             }
           })
-            .then(resp => dispatch(fetchTodos(userKey)))
+            .then(resp => dispatch(fetchTodos(userKey, userID)))
     }
 }
 

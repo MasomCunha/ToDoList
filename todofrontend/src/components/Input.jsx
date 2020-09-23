@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { changeTitle, changeDescription, add } from '../store/todoActions.js'
 
 
-const ToDo = ({ Title, Description, userKey, changeDescription, changeTitle, add }) => {
+const ToDo = ({ Title, Description, userKey, changeDescription, changeTitle, add, user, email, userID }) => {
 
 
   return (
@@ -32,7 +32,7 @@ const ToDo = ({ Title, Description, userKey, changeDescription, changeTitle, add
           </div>
           <div className="modal-footer">
             <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal"
-              onClick={() => add(Title, Description, userKey)} >Add ToDo</button>
+              onClick={() => add(Title, Description, userKey, user, email, userID)} >Add ToDo</button>
           </div>
         </div>
       </div>
@@ -44,7 +44,10 @@ const mapStateToProps = state => {
   return {
     Title: state.todo.Title,
     Description: state.todo.Description,
-    userKey: state.auth.userKey
+    userKey: state.auth.userKey,
+    user: state.auth.UserName,
+    email: state.auth.email,
+    userID: state.auth.userID
   };
 }
 

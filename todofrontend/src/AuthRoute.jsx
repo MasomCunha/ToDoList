@@ -6,8 +6,13 @@ const AuthRoute = props => {
 
   const { isAuthUser, type } = props;
 
-  if (type === "guest" && isAuthUser) return <Redirect to="/home" />;
-  else if (type === "private" && !isAuthUser) return <Redirect to="/" />;
+  if (type === "guest" && isAuthUser) {
+    return <Redirect to="/home" />
+  }
+  
+  if (type === "private" && !isAuthUser) {
+    return <Redirect to="/" />;
+  } 
 
   return <Route {...props} />;
 };

@@ -1,3 +1,4 @@
+
 const INITIAL_STATE = {
     userID: null,
     UserName: null,
@@ -16,6 +17,13 @@ export default( state=INITIAL_STATE, action) => {
                 email:action.payload.user.email,
                 userKey: action.payload.jwt, 
                 isAuth: true}
+        case 'USER_LOGOUT':
+            return { ...state, 
+                    UserName: null,
+                    userID: null,
+                    email: null,
+                    userKey: null, 
+                    isAuth: false}
         default:
             return state
     }

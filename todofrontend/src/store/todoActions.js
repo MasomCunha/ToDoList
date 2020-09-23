@@ -13,7 +13,6 @@ export const changeDescription = (event) => ({
 })
 
 export const fetchTodos = (userKey) => {
-    console.log(userKey)
     const request = axios.get(URL, {
         headers: {
           Authorization:
@@ -47,42 +46,45 @@ export const add = (Title, Description, userKey) => {
 
 export const markAsDone = (todo, userKey) => {
 
-    console.log(todo)
-
     if (todo.Completed === true) {
         return dispatch => {
             axios.put(URL + `/${todo.id}`, {
-                ...todo, Completed: false
+                ...todo,
+                Completed: false
               }, {
                 headers: {
                     Authorization:'Bearer ' + userKey
                 }
-              }            
-            )
-            .then(resp => dispatch(fetchTodos(userKey)))
+              }).then(console.log("here"))
+                .then(resp => dispatch(fetchTodos(userKey)))
         }
     }
 
     if (todo.Completed === false) {
         return dispatch => {
             axios.put(URL + `/${todo.id}`, {
-                ...todo, Completed: false
+                ...todo,
+                Completed: true
               }, {
                 headers: {
                     Authorization:'Bearer ' + userKey
                 }
-              }            )
-            .then(resp => dispatch(fetchTodos(userKey)))
+              }).then(console.log("here"))
+                .then(resp => dispatch(fetchTodos(userKey)))
         }
     }
+
+    
 }
 
 export const remove = (todo, userKey) => {
 
     return dispatch => {
         axios.delete(URL + `/${todo.id}`, {
-            Authorization:'Bearer ' + userKey
-        })
+            headers: {
+                Authorization:'Bearer ' + userKey
+            }
+          })
             .then(resp => dispatch(fetchTodos(userKey)))
     }
 }

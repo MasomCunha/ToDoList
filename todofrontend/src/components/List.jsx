@@ -11,10 +11,10 @@ const List = (props) => {
 
   useEffect(() => {
     const loadFetch = async () => {
-      await fetchTodos(props.userkey);
+      await props.fetchTodos(props.userkey);
     };
     loadFetch(props.userkey);
-  }, [fetchTodos]);
+  }, [props.fetchTodos]);
 
   return (
 
@@ -32,11 +32,11 @@ const List = (props) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
                   {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e, userKey)}>Incomplete</button> :
+                    onClick={() => props.markAsDone(e, userKey)}>Incomplete</button> :
                     <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e, userKey)}>Complete</button>}
+                      onClick={() => props.markAsDone(e, userKey)}>Complete</button>}
                   <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e, userKey)}>Delete</button>
+                    onClick={() => props.remove(e, userKey)}>Delete</button>
                 </div>
               </li>
             ) 
@@ -51,11 +51,11 @@ const List = (props) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
                   {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e, userKey)}>Incomplete</button> :
+                    onClick={() => props.markAsDone(e, userKey)}>Incomplete</button> :
                     <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e, userKey)}>Complete</button>}
+                      onClick={() => props.markAsDone(e, userKey)}>Complete</button>}
                   <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e, userKey)}>Delete</button>
+                    onClick={() => props.remove(e, userKey)}>Delete</button>
                 </div>
               </li>
             ) 
@@ -70,11 +70,11 @@ const List = (props) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"5%" }}>
                   {e.Completed ? <button type="button" className="btn btn-warning btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => markAsDone(e, userKey)}>Incomplete</button> :
+                    onClick={() => props.markAsDone(e, userKey)}>Incomplete</button> :
                     <button type="button" className="btn btn-success btn-sm" data-toggle="button" aria-pressed="false"
-                      onClick={() => markAsDone(e, userKey)}>Complete</button>}
+                      onClick={() => props.markAsDone(e, userKey)}>Complete</button>}
                   <button type="button" className="btn btn-danger btn-sm" data-toggle="button" aria-pressed="false"
-                    onClick={() => remove(e, userKey)}>Delete</button>
+                    onClick={() => props.remove(e, userKey)}>Delete</button>
                 </div>
               </li>
             ) 

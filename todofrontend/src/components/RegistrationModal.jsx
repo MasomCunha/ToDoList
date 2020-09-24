@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { validation } from '../util/util'
-import { connect } from 'react-redux'
-import { registration } from '../store/authActions.js'
-import { bindActionCreators } from 'redux'
+import { RegistrationValidation, registration } from '../util/util'
 
-const RegistrationModal = ( { registration } ) => {
+
+
+
+const RegistrationModal = () => {
 
     const [user, setUser] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
+    const [errors, setErrors] = useState({})
+    
 
     const handleChangeUser = (e) => {
         setUser(e.target.value)
@@ -22,14 +24,22 @@ const RegistrationModal = ( { registration } ) => {
         setEmail(e.target.value)
     }
 
+  
+
     const contactSubmit = (e) => {
         e.preventDefault();
+
+        const isValid = RegistrationValidation(user, email, password)
     
-        if (validation(user, email, password)) {
+        if (isValid === true) {
             registration(user, email, password)
-            alert("Form submitted");
+            alert(user + " Added!");
+            setUser("")
+            setPassword("")
+            setEmail("")
+            setErrors("")
         } else {
-            alert("Form has errors.")
+            setErrors(isValid)
         }
     
     }
@@ -48,22 +58,27 @@ const RegistrationModal = ( { registration } ) => {
                     <div className="modal-body">
                         <form className="post" style={{ marginLeft: "15%", marginRight: "15%", marginBottom: "2%" }}>
                             <div className="form-group">
-                                <input className="form-control" type="text" placeholder="UserName" value={user} onChange={handleChangeUser}
+                                <input className="form-control" type="text" placeholder="UserName" value={user} onChange={ (e) => handleChangeUser(e)}
                                 ></input>
+                                 <span style={{color: "red"}}>{errors["name"]}</span>
                             </div>
                             <div className="form-group">
-                                <input className="form-control" type="email" placeholder="Email" value={email} onChange={handleChangeEmail}
+                                <input className="form-control" type="email" placeholder="Email" value={email} onChange={ (e) => handleChangeEmail(e)}
                                 ></input>
+                                 <span style={{color: "red"}}>{errors["email"]}</span>
                             </div>
                             <div className="form-group">
-                                <input type="password" className="form-control" rows="3" placeholder="password" value={password} onChange={handleChangePassword}></input>
+                                <input type="password" className="form-control" rows="3" placeholder="password" value={password} onChange={ (e) => handleChangePassword(e) }></input>
                             </div>
+                            <span style={{color: "red"}}>{errors["password"]}</span>
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" style={{ marginRight: "45%" }}
-                        onClick={(e) => contactSubmit(e)}
+                        <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" style={{ float:"left" }}
+                        onClick={ (e) => contactSubmit(e)}
                         >Registration</button>
+                         <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" style={{ float:"right" }}
+                        >Go Back</button>
                     </div>
                 </div>
             </div>
@@ -71,8 +86,6 @@ const RegistrationModal = ( { registration } ) => {
     )
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-    { registration }, dispatch
-)
 
-export default connect(null, mapDispatchToProps)(RegistrationModal)
+
+export default RegistrationModal

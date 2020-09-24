@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { login } from '../store/authActions.js'
 import { bindActionCreators } from 'redux'
 
-const LogginModal = ( { login } ) => {
+const LogginModal = ({ login }) => {
 
     const [user, setUser] = useState("")
     const [password, setPassword] = useState("")
@@ -31,16 +31,16 @@ const LogginModal = ( { login } ) => {
                     <div className="modal-body">
                         <form className="post" style={{ marginLeft: "15%", marginRight: "15%", marginBottom: "2%" }}>
                             <div className="form-group">
-                                <input className="form-control" type="text" placeholder="UserName" value={user} onChange={handleChangeUser}
+                                <input className="form-control" type="text" placeholder="UserName" value={user} onChange={ (e) => handleChangeUser(e) }
                                 ></input>
                             </div>
                             <div className="form-group">
-                                <input type="password" className="form-control" rows="3" placeholder="password" value={password} onChange={handleChangePassword}></input>
+                                <input type="password" className="form-control" rows="3" placeholder="password" value={password} onChange={ (e) => handleChangePassword(e) }></input>
                             </div>
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" style={{ marginRight: "45%" }}
+                        <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" style={{float:"left" }}
                         onClick={() => login(user, password)}>Login</button>
                     </div>
                 </div>

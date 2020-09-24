@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { ToDoValidation } from '../util/util'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { changeTitle, changeDescription, add } from '../store/todoActions.js'
@@ -6,6 +7,22 @@ import { changeTitle, changeDescription, add } from '../store/todoActions.js'
 
 const ToDo = ({ Title, Description, userKey, changeDescription, changeTitle, add, user, email, userID }) => {
 
+  const [errors, setErrors] = useState({})
+
+
+  const handleSubmit = () => {
+
+    const isValid = ToDoValidation(Title, Description)
+
+    if(isValid === true) {
+      add(Title, Description, userKey, user, email, userID)
+      alert("ToDo Added");
+    }else{
+      console.log(isValid)
+      setErrors(isValid)
+    }
+
+  }
 
   return (
 
@@ -23,16 +40,20 @@ const ToDo = ({ Title, Description, userKey, changeDescription, changeTitle, add
               <div className="form-group">
                 <input className="form-control" type="text" placeholder="Title" value={Title}
                   onChange={changeTitle}></input>
+                  <span style={{color: "red"}}>{errors["title"]}</span>
               </div>
               <div className="form-group">
                 <textarea className="form-control" rows="3" placeholder="Description" value={Description}
                   onChange={changeDescription}></textarea>
+                  <span style={{color: "red"}}>{errors["description"]}</span>
               </div>
             </form>
           </div>
           <div className="modal-footer">
-            <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal"
-              onClick={() => add(Title, Description, userKey, user, email, userID)} >Add ToDo</button>
+            <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" 
+              onClick={ () => handleSubmit() } >Add ToDo</button>
+               <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" 
+              >Go Back</button>
           </div>
         </div>
       </div>

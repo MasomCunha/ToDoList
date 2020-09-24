@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { searchFilter } from '../util/util'
 import WithoutList from './WithoutList.jsx'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -7,7 +8,13 @@ import { fetchTodos, markAsDone, remove } from '../store/todoActions.js'
 
 
 const List = (props) => {
-  
+
+  console.log(props)
+  console.log(props.list)
+  if(props.startSearch){
+    searchFilter(props.list, props.searchElement)
+  }
+
   const userKey = props.userkey;
   
   useEffect(() => {
@@ -91,11 +98,14 @@ const List = (props) => {
 }
 
 const mapStateToProps = state => (
+
   {
     list: state.todo.list,
     listType: state.todo.listType,
     userkey: state.auth.userKey,
-    userID: state.auth.userID
+    userID: state.auth.userID,
+    searchElement: state.search.inputSearch,
+    startSearch: state.search.startSearch
   }
 )
 

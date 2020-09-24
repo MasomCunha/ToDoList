@@ -15,6 +15,7 @@ const LogginModal = ( { login } ) => {
     const handleChangePassword = (e) => {
         setPassword(e.target.value)
     }
+    
 
     return (
 

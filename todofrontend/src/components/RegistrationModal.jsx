@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { validation } from '../util/util'
 import { connect } from 'react-redux'
 import { registration } from '../store/authActions.js'
 import { bindActionCreators } from 'redux'
@@ -19,6 +20,18 @@ const RegistrationModal = ( { registration } ) => {
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value)
+    }
+
+    const contactSubmit = (e) => {
+        e.preventDefault();
+    
+        if (validation(user, email, password)) {
+            registration(user, email, password)
+            alert("Form submitted");
+        } else {
+            alert("Form has errors.")
+        }
+    
     }
 
     return (
@@ -49,7 +62,8 @@ const RegistrationModal = ( { registration } ) => {
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-light btn-sm" type="submit" data-toggle="button" aria-pressed="false" data-dismiss="modal" style={{ marginRight: "45%" }}
-                        onClick={() => registration(user, email, password)}>Registration</button>
+                        onClick={(e) => contactSubmit(e)}
+                        >Registration</button>
                     </div>
                 </div>
             </div>

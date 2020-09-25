@@ -2,7 +2,8 @@ const INITIAL_STATE = {
     Title: "",
     Description: "",
     list: [],
-    listType: "all"
+    listType: "all",
+    isSearch: false
 }
 
 export default( state=INITIAL_STATE, action) => {
@@ -21,6 +22,9 @@ export default( state=INITIAL_STATE, action) => {
             return { ...state, listType: action.payload}
         case 'CHANGE_TO_ALL':
             return { ...state, listType: action.payload}
+        case 'TODO_SEARCH_LIST':
+            console.log(action.payload.data)
+            return {...state, list: action.payload.data, isSearch: true}
         default:
             return state
     }

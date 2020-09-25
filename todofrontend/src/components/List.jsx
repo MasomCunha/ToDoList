@@ -7,7 +7,8 @@ import { fetchTodos, markAsDone, remove } from '../store/todoActions.js'
 
 
 const List = (props) => {
-  
+
+
   const userKey = props.userkey;
   
   useEffect(() => {
@@ -91,11 +92,12 @@ const List = (props) => {
 }
 
 const mapStateToProps = state => (
+
   {
     list: state.todo.list,
     listType: state.todo.listType,
     userkey: state.auth.userKey,
-    userID: state.auth.userID
+    userID: state.auth.userID,
   }
 )
 

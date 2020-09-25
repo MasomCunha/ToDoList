@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const URL = 'http://localhost:1337/to-dos'
-const GETURL = 'http://localhost:1337/users'
+const GETURL = 'http://localhost:1337/users/me'
 
 export const changeTitle = (event) => ({
     type: 'CHANGE_TITLE',
@@ -13,8 +13,8 @@ export const changeDescription = (event) => ({
     payload: event.target.value
 })
 
-export const fetchTodos = (userKey, userID) => {
-    const request = axios.get(GETURL + `/${userID}`, {
+export const fetchTodos = (userKey) => {
+    const request = axios.get(GETURL, {
         headers: {
           Authorization:
             'Bearer ' + userKey
@@ -22,6 +22,20 @@ export const fetchTodos = (userKey, userID) => {
       });
     return {
         type: 'TODO_LIST',
+        payload: request
+    }
+}
+
+export const fetchSearchTodos = (userKey, searchInput, userID) => {
+    console.log(userKey, searchInput, userID)
+    const request = axios.get(`http://localhost:1337/to-dos?Title=${searchInput}&user.id=${userID}`, {
+        headers: {
+          Authorization:
+            'Bearer ' + userKey
+        },
+      });
+    return {
+        type: 'TODO_SEARCH_LIST',
         payload: request
     }
 }

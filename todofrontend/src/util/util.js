@@ -113,11 +113,7 @@ export const ToDoValidation = (title, description) => {
 
 }
 
-export const searchFilter = (list, element) => {
-    console.log(list)
-    console.log(element)
-   console.log(list.filter(e => e.Title === element) )
-}
+
 
 
 
